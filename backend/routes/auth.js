@@ -112,6 +112,12 @@ router.post('/register', [
         VALUES (?, ?, ?)
       `, [userId, tokenHash, expiresAt]);
 
+      // Create initial user activity record
+      await connection.execute(`
+        INSERT INTO user_activity (user_id, last_login, login_count)
+        VALUES (?, NOW(), 1)
+      `, [userId]);
+
       res.status(201).json({
         success: true,
         message: 'User registered successfully',
@@ -208,6 +214,15 @@ router.post('/login', [
         INSERT INTO user_sessions (user_id, token_hash, expires_at)
         VALUES (?, ?, ?)
       `, [user.id, tokenHash, expiresAt]);
+
+      // Update user activity (login tracking)
+      await connection.execute(`
+        INSERT INTO user_activity (user_id, last_login, login_count) 
+        VALUES (?, NOW(), 1)
+        ON DUPLICATE KEY UPDATE 
+        last_login = NOW(), 
+        login_count = login_count + 1
+      `, [user.id]);
 
       // Clean old sessions
       await connection.execute(`

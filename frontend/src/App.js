@@ -7,8 +7,14 @@ import UserProfile from './components/user/UserProfile';
 import UserDashboard from './components/user/UserDashboard';
 import PaymentModal from './components/payment/PaymentModal';
 import DisclaimerModal from './components/common/DisclaimerModal';
+import AdminApp from './components/admin/AdminApp';
 
 const CareerDiscoveryLanding = () => {
+  // Check if current URL is admin route
+  if (window.location.pathname === '/admin' || window.location.pathname.startsWith('/admin/')) {
+    return <AdminApp />;
+  }
+
   const { user, logout, isAuthenticated, getPackages, getFilteredPackages } = useUser();
   const [liveStats, setLiveStats] = useState(47);
   const [scrollY, setScrollY] = useState(0);

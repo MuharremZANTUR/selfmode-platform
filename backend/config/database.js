@@ -44,10 +44,12 @@ const initializeDatabase = async () => {
         last_name VARCHAR(100) NOT NULL,
         birth_date DATE NOT NULL,
         phone VARCHAR(20),
+        role ENUM('user', 'admin') DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE,
         INDEX idx_email (email),
+        INDEX idx_role (role),
         INDEX idx_created_at (created_at)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
@@ -106,6 +108,47 @@ const initializeDatabase = async () => {
         INDEX idx_user_id (user_id),
         INDEX idx_token_hash (token_hash),
         INDEX idx_expires_at (expires_at)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+
+    // Create user_activity table for admin tracking
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS user_activity (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        last_login TIMESTAMP NULL,
+        login_count INT DEFAULT 0,
+        test_completed BOOLEAN DEFAULT FALSE,
+        test_completed_at TIMESTAMP NULL,
+        report_generated BOOLEAN DEFAULT FALSE,
+        report_generated_at TIMESTAMP NULL,
+        report_downloaded BOOLEAN DEFAULT FALSE,
+        report_downloaded_at TIMESTAMP NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        INDEX idx_user_id (user_id),
+        INDEX idx_test_completed (test_completed),
+        INDEX idx_report_downloaded (report_downloaded)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
+
+    // Create user_reports table
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS user_reports (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        assessment_id INT,
+        assessment_result JSON,
+        personality_type VARCHAR(100),
+        career_suggestions JSON,
+        report_data JSON,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE SET NULL,
+        INDEX idx_user_id (user_id),
+        INDEX idx_assessment_id (assessment_id)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
 
@@ -311,9 +354,60 @@ const insertDefaultPackages = async () => {
   }
 };
 
+// Create default admin user
+const createDefaultAdmin = async () => {
+  try {
+    const connection = await pool.getConnection();
+    
+    // Check if admin already exists
+    const [existingAdmin] = await connection.execute(
+      'SELECT id FROM users WHERE role = "admin" LIMIT 1'
+    );
+    
+    if (existingAdmin.length > 0) {
+      console.log('✅ Admin user already exists');
+      connection.release();
+      return true;
+    }
+    
+    // Create default admin user
+    const bcrypt = require('bcryptjs');
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+    
+    await connection.execute(`
+      INSERT INTO users (email, password, first_name, last_name, birth_date, role)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `, [
+      'admin@selfmode.app',
+      hashedPassword,
+      'Admin',
+      'User',
+      '1990-01-01',
+      'admin'
+    ]);
+    
+    console.log('✅ Default admin user created: admin@selfmode.app / admin123');
+    connection.release();
+    return true;
+  } catch (error) {
+    console.error('❌ Failed to create admin user:', error.message);
+    return false;
+  }
+};
+
 module.exports = {
   pool,
+  query: async (sql, params) => {
+    try {
+      const [results] = await pool.execute(sql, params);
+      return results;
+    } catch (error) {
+      console.error('Database query error:', error);
+      throw error;
+    }
+  },
   testConnection,
   initializeDatabase,
-  insertDefaultPackages
+  insertDefaultPackages,
+  createDefaultAdmin
 };

@@ -1,14 +1,9 @@
-version: 1
 services:
   - type: web
     name: selfmode-platform
     env: node
-    buildCommand: npm install && cd frontend && npm install && npm run build && cd ..
+    buildCommand: cd frontend && npm install && npm run build && cd .. && cd backend && npm install
     startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
-      - key: FRONTEND_URL
-        value: https://selfmode-platform.onrender.com
-      - key: PORT
-        value: 10000
