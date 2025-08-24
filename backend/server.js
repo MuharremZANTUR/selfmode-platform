@@ -43,7 +43,17 @@ app.use('/api/assessments', assessmentRoutes);
 
 // Serve static files from React build
 if (process.env.NODE_ENV === 'production') {
+  // Serve static files
   app.use(express.static(path.join(__dirname, '../frontend/build')));
+  
+  // For any non-API request, serve the React app
+  app.get('*', (req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/')) {
+      return next();
+    }
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  });
 }
 
 // Health check endpoint
@@ -65,13 +75,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Serve React app for all non-API routes (production)
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-  });
-} else {
-  // 404 handler for development
+// 404 handler for development
+if (process.env.NODE_ENV !== 'production') {
   app.use('*', (req, res) => {
     res.status(404).json({ 
       success: false, 
