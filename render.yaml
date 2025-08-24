@@ -1,11 +1,10 @@
-# Fixed deployment configuration
 version: 1
 services:
   - type: web
     name: selfmode-platform
     env: node
-    buildCommand: npm run install-deps && npm run build
-    startCommand: npm start
+    buildCommand: npm install && cd frontend && npm install && npm run build && cd ..
+    startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
