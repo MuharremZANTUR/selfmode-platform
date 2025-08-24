@@ -1,11 +1,11 @@
-# Force rebuild - Updated deployment configuration
+# Emergency fix - Simple build configuration
 version: 1
 services:
   - type: web
     name: selfmode-platform
     env: node
-    buildCommand: npm run build
-    startCommand: npm start
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
