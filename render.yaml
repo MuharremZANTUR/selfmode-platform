@@ -1,0 +1,12 @@
+version: 1
+services:
+  - type: web
+    name: selfmode-platform
+    env: node
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        value: https://selfmode-platform.onrender.com

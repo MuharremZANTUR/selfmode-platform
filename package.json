@@ -9,7 +9,9 @@
     "install-deps": "cd backend && npm install && cd ../frontend && npm install",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
     "backend": "cd backend && npm start",
-    "frontend": "cd frontend && npm start"
+    "frontend": "cd frontend && npm start",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "render-build": "cd frontend && npm install && npm run build"
   },
   "engines": {
     "node": ">=16.0.0",
