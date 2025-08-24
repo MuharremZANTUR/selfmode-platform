@@ -41,70 +41,120 @@ const DisclaimerModal = ({ isOpen, onClose, onAccept, selectedPackage }) => {
         </div>
 
         {/* Disclaimer Content */}
-        <div className="p-6 space-y-4">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h4 className="font-bold text-yellow-800 mb-2">⚠️ Önemli Uyarı</h4>
-            <p className="text-yellow-700 text-sm">
-              Bu analiz sonuçları bilimsel testlere dayanmakla birlikte, yalnızca rehberlik amaçlıdır. 
-              Kesin bir kariyer kararı verebilmek için ek danışmanlık almanızı öneriyoruz.
+        <div className="p-6 space-y-6">
+          {/* Ana Bilgilendirme */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h4 className="font-bold text-blue-800 mb-3 flex items-center">
+              <span className="text-2xl mr-2">🎯</span>
+              Analizin Amacı ve Değeri
+            </h4>
+            <p className="text-blue-700 text-sm mb-3">
+              Bu kapsamlı kişilik ve potansiyel analizi, binlerce kişinin kendilerini daha iyi tanımasına katkı sağlamış olan yapay zeka destekli metodolojimiz ile geliştirilmiştir.
             </p>
+            <div className="text-sm text-blue-700">
+              <p className="font-semibold mb-2">Bu analiz size şunları sunar:</p>
+              <ul className="space-y-1 text-xs">
+                <li>• Kişilik yapınızın derinlemesine analizi</li>
+                <li>• Doğal yeteneklerinizin ve güçlü yönlerinizin keşfi</li>
+                <li>• Size uygun kariyer alanlarının belirlenmesi</li>
+                <li>• Uzak durmanız gereken mesleki alanların tespiti</li>
+                <li>• Kişisel gelişim için özel öneriler</li>
+                <li>• Yaşam tarzı ve değerlerinize uygun rehberlik</li>
+              </ul>
+            </div>
           </div>
 
-          <div className="space-y-3">
-            <h4 className="font-bold text-gray-800">Kullanım Koşulları:</h4>
-            <ul className="space-y-2 text-sm text-gray-700">
+          {/* Gizlilik ve Veri Güvenliği */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+            <h4 className="font-bold text-green-800 mb-3 flex items-center">
+              <span className="text-2xl mr-2">🔒</span>
+              Gizlilik ve Veri Güvenliği
+            </h4>
+            <ul className="space-y-2 text-sm text-green-700">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                <span>
-                  Analiz sonuçları kişisel gelişiminize rehberlik etmek amacıyla hazırlanmıştır.
-                </span>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Kişisel bilgileriniz (ad, e-posta vb.) katı gizlilik politikamız kapsamında korunur</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                <span>
-                  Test sonuçları %100 kesinlik iddiasında değildir ve zaman içinde değişebilir.
-                </span>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Test cevaplarınız sadece kişisel raporunuz için kullanılır ve kimlik bilgilerinizden ayrı tutulur</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                <span>
-                  Sonuçları değerlendirirken kendi deneyim ve tercihlerinizi de göz önünde bulundurun.
-                </span>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Verileriniz üçüncü taraflarla paylaşılmaz</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                <span>
-                  SelfMode, analiz sonuçlarına dayalı alınan kararlardan sorumlu değildir.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                <span>
-                  Kişisel verileriniz gizlilik politikamız çerçevesinde korunmaktadır.
-                </span>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                <span>İstediğiniz zaman verilerinizin silinmesini talep edebilirsiniz</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-            <h4 className="font-bold text-green-800 mb-2">✅ Ne Bekleyebilirsiniz?</h4>
-            <ul className="space-y-1 text-sm text-green-700">
-              <li>• Kişilik özelliklerinize uygun meslek önerileri</li>
-              <li>• Güçlü ve zayıf yönlerinizin analizi</li>
-              <li>• Uzak durmanız gereken alanların tespiti</li>
-              <li>• AI destekli kariyer rehberliği</li>
-              <li>• Detaylı rapor ve gelişim önerileri</li>
+          {/* Sonuçların Doğası ve Sınırları */}
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <h4 className="font-bold text-yellow-800 mb-3 flex items-center">
+              <span className="text-2xl mr-2">⚖️</span>
+              Sonuçların Doğası ve Sınırları
+            </h4>
+            <p className="text-yellow-700 text-sm mb-3 font-semibold">Lütfen dikkat edin:</p>
+            <ul className="space-y-2 text-sm text-yellow-700">
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Bu analiz, belirli bir andaki düşünce, duygu ve tercihlerinizi yansıtır</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Yapay zeka modelimiz sürekli gelişmekte olsa da, %100 kesin sonuçlar garanti edemez</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Sonuçlar, kişisel gelişiminize ışık tutmak ve yeni perspektifler kazandırmak amacıyla hazırlanmıştır</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Bu analiz, profesyonel psikolojik değerlendirme veya tıbbi teşhis yerine geçmez</span>
+              </li>
             </ul>
           </div>
 
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h4 className="font-bold text-red-800 mb-2">❌ Bu Analiz Nedir DEĞIL?</h4>
-            <ul className="space-y-1 text-sm text-red-700">
-              <li>• Kesin bir kariyer garantisi</li>
-              <li>• Profesyonel psikolojik danışmanlık</li>
-              <li>• Tıbbi veya klinik değerlendirme</li>
-              <li>• İş bulma garantisi</li>
+          {/* Tavsiyelerimiz */}
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
+            <h4 className="font-bold text-purple-800 mb-3 flex items-center">
+              <span className="text-2xl mr-2">🎓</span>
+              Tavsiyelerimiz
+            </h4>
+            <ul className="space-y-2 text-sm text-purple-700">
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Sonuçları açık bir zihinle değerlendirin ve kendi deneyimlerinizle harmanlayın</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Önemli yaşam kararları öncesinde profesyonel danışmanlık almayı düşünün</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Bu analizi, sürekli gelişen bir yolculuğun başlangıcı olarak görün</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0" />
+                <span>Sonuçları aileniz ve güvendiğiniz kişilerle paylaşarak farklı bakış açıları edinin</span>
+              </li>
             </ul>
+          </div>
+
+          {/* Final Message */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-lg p-6 text-center">
+            <p className="text-gray-700 font-medium mb-4">
+              Bu analizi başlatarak, yukarıdaki tüm bilgileri okuduğunuzu, anladığınızı ve kabul ettiğinizi onaylamış olursunuz.
+            </p>
+            <p className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Kendi potansiyelinizi keşfetme yolculuğunuzda size rehberlik etmekten mutluluk duyacağız.
+            </p>
+            <p className="text-xl mt-4">
+              <span className="font-bold text-orange-600">Hazır mısınız?</span> 
+              <span className="font-bold text-green-600">Hadi kendinizle tanışmaya başlayalım! ✨</span>
+            </p>
           </div>
         </div>
 

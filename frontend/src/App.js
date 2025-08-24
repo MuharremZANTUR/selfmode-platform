@@ -610,6 +610,98 @@ const CareerDiscoveryLanding = () => {
         </div>
       </div>
 
+      {/* Mission, Vision & Values Section */}
+      <div className="bg-gradient-to-r from-blue-900 via-purple-900 to-green-900 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                Misyon, Vizyon & Değerlerimiz
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              SelfMode olarak, insanların gerçek potansiyellerini keşfetmelerine rehberlik ediyoruz
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            {/* Vision */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center mr-4">
+                  <Target className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-orange-400">Vizyonumuz</h3>
+              </div>
+              <p className="text-gray-200 leading-relaxed">
+                Dünyadaki her bireyin kendi potansiyelini keşfederek, anlamlı ve tatmin edici bir yaşam sürmesini sağlamak. 
+                İnsanların "otopilot modundan" çıkıp, bilinçli seçimlerle kendi hayatlarının mimarı olmalarını desteklemek.
+              </p>
+            </div>
+
+            {/* Mission */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-400 rounded-full flex items-center justify-center mr-4">
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-green-400">Misyonumuz</h3>
+              </div>
+              <p className="text-gray-200 leading-relaxed">
+                Yapay zeka destekli kapsamlı analiz araçlarımızla, bireylerin kendileriyle gerçek anlamda "tanışmalarını" sağlıyoruz. 
+                Yetenekler, ilgi alanları, kişilik özellikleri ve potansiyeli bir araya getirerek, herkesin kendine uygun yaşam ve kariyer yolunu bulmasına rehberlik ediyoruz.
+              </p>
+            </div>
+          </div>
+
+          {/* Values */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8">
+            <h3 className="text-3xl font-bold text-center mb-8">
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Değerlerimiz
+              </span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-lg text-orange-400 mb-2">Özgünlük</h4>
+                <p className="text-gray-300 text-sm">Her birey benzersizdir ve kendi yolunu bulma hakkına sahiptir</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Brain className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-lg text-blue-400 mb-2">Farkındalık</h4>
+                <p className="text-gray-300 text-sm">Kendini tanımak, tüm başarının temelidir</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-blue-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ArrowRight className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-lg text-green-400 mb-2">Dönüşüm</h4>
+                <p className="text-gray-300 text-sm">Pasif yaşamdan aktif, anlamlı yaşama geçiş mümkündür</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-lg text-purple-400 mb-2">Bütünlük</h4>
+                <p className="text-gray-300 text-sm">İnsan sadece bir meslek değil, çok boyutlu bir varlıktır</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-lg text-yellow-400 mb-2">Güven</h4>
+                <p className="text-gray-300 text-sm">Şeffaflık ve dürüstlük, rehberliğimizin temelindedir</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Features Section */}
       <div className="bg-gradient-to-r from-blue-50 to-green-50 py-16">
         <div className="max-w-7xl mx-auto px-4">
