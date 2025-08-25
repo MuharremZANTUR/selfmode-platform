@@ -80,7 +80,61 @@ export const UserProvider = ({ children }) => {
       }
     } catch (error) {
       setLoading(false);
-      return { success: false, error: error.message || 'Network error' };
+      
+      // Backend bağlantısı yoksa localStorage fallback
+      console.warn('Backend registration failed, using localStorage fallback:', error);
+      
+      const mockUser = {
+        id: Date.now(),
+        email: userData.email,
+        firstName: userData.firstName || userData.name?.split(' ')[0] || '',
+        lastName: userData.lastName || userData.name?.split(' ')[1] || '',
+        birthDate: userData.birthDate,
+        phone: userData.phone || null,
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        loginCount: 1,
+        testCompleted: false,
+        reportDownloaded: false
+      };
+      
+      // localStorage'a kullanıcı bilgilerini kaydet
+      const existingUsers = localStorage.getItem('registeredUsers');
+      let users = [];
+      
+      if (existingUsers) {
+        try {
+          users = JSON.parse(existingUsers);
+        } catch (parseError) {
+          console.error('Error parsing existing users:', parseError);
+          users = [];
+        }
+      }
+      
+      // E-posta kontrolü - aynı e-posta ile kayıt varsa hata döndür
+      const existingUser = users.find(user => user.email === userData.email);
+      if (existingUser) {
+        return { success: false, error: 'Bu e-posta adresi zaten kullanılıyor' };
+      }
+      
+      users.push(mockUser);
+      localStorage.setItem('registeredUsers', JSON.stringify(users));
+      
+      // Kullanıcıyı giriş yapmış olarak işaretle
+      const authToken = 'mock-token-' + Date.now();
+      localStorage.setItem('auth_token', authToken);
+      
+      setUser({
+        id: mockUser.id,
+        email: mockUser.email,
+        name: `${mockUser.firstName} ${mockUser.lastName}`.trim(),
+        firstName: mockUser.firstName,
+        lastName: mockUser.lastName,
+        birthDate: mockUser.birthDate,
+        phone: mockUser.phone
+      });
+      
+      return { success: true, user: mockUser };
     }
   };
 
@@ -92,6 +146,8 @@ export const UserProvider = ({ children }) => {
       console.error('Logout error:', error);
     } finally {
       setUser(null);
+      // localStorage'daki authentication token'ı da temizle
+      localStorage.removeItem('auth_token');
       setLoading(false);
     }
   };

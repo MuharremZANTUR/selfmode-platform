@@ -10,11 +10,6 @@ import DisclaimerModal from './components/common/DisclaimerModal';
 import AdminApp from './components/admin/AdminApp';
 
 const CareerDiscoveryLanding = () => {
-  // Check if current URL is admin route
-  if (window.location.pathname === '/admin' || window.location.pathname.startsWith('/admin/')) {
-    return <AdminApp />;
-  }
-
   const { user, logout, isAuthenticated, getPackages, getFilteredPackages } = useUser();
   const [liveStats, setLiveStats] = useState(47);
   const [scrollY, setScrollY] = useState(0);
@@ -324,7 +319,7 @@ const CareerDiscoveryLanding = () => {
       <div className={`fixed z-50 transition-all duration-700 ease-in-out ${
         scrollY > 100 
           ? 'top-3 left-6 transform-none' 
-          : 'top-8 left-1/2 transform -translate-x-1/2'
+          : 'top-12 left-1/2 transform -translate-x-1/2'
       }`}>
         <div className={`flex items-center backdrop-blur-sm rounded-3xl shadow-2xl transition-all duration-700 ease-in-out ${
           scrollY > 100 
@@ -424,7 +419,7 @@ const CareerDiscoveryLanding = () => {
           style={{ transform: `translateY(${scrollY * 0.5}px)` }}
         />
         
-        <div className="relative max-w-7xl mx-auto px-4 pt-40 pb-20 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 pt-52 pb-20 text-center">
           <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 bg-clip-text text-transparent mb-6">
             Switch to<br/>
             <span className="text-6xl md:text-8xl">SELF MODE!</span>
@@ -546,13 +541,7 @@ const CareerDiscoveryLanding = () => {
                 pkg.popular ? 'border-orange-400 ring-4 ring-orange-100' : 'border-gray-200'
               }`}
             >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-orange-400 to-red-400 text-white px-6 py-2 rounded-full text-sm font-bold">
-                    🔥 EN POPÜLER
-                  </span>
-                </div>
-              )}
+
               
               <div className="text-center mb-6">
                 <h3 className="font-bold text-xl mb-2">
@@ -864,6 +853,11 @@ const CareerDiscoveryLanding = () => {
 };
 
 const App = () => {
+  // Check if current URL is admin route BEFORE UserProvider
+  if (window.location.pathname === '/admin' || window.location.pathname.startsWith('/admin/')) {
+    return <AdminApp />;
+  }
+
   return (
     <UserProvider>
       <CareerDiscoveryLanding />

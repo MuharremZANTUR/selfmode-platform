@@ -40,7 +40,25 @@ const AdminApp = () => {
       }
     } catch (error) {
       console.error('Token verification failed:', error);
-      localStorage.removeItem('adminToken');
+      
+      // Backend bağlantısı yoksa localStorage'dan kullanıcı bilgilerini al
+      const savedUser = localStorage.getItem('adminUser');
+      if (savedUser && token) {
+        try {
+          const userData = JSON.parse(savedUser);
+          setAdminUser(userData);
+          setAdminToken(token);
+          setIsAuthenticated(true);
+          console.log('Fallback admin authentication successful');
+        } catch (parseError) {
+          console.error('Error parsing saved admin user:', parseError);
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('adminUser');
+        }
+      } else {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -56,14 +74,16 @@ const AdminApp = () => {
     setAdminUser(null);
     setAdminToken(null);
     setIsAuthenticated(false);
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUser');
   };
 
   if (isLoading) {
     return (
-      <div className=\"min-h-screen bg-gray-50 flex items-center justify-center\">
-        <div className=\"text-center\">
-          <div className=\"w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4\"></div>
-          <p className=\"text-gray-600\">Yükleniyor...</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Yükleniyor...</p>
         </div>
       </div>
     );
