@@ -128,25 +128,29 @@ app.use('*', (req, res) => {
 // Start server based on SSL configuration
 const startServer = async () => {
   try {
-    // Initialize database
-    console.log('\n🔄 Initializing production database...');
-    const dbConnected = await testConnection();
-    
-    if (dbConnected) {
-      const dbInitialized = await initializeDatabase();
-      if (dbInitialized) {
-        console.log('🔄 Inserting default packages...');
-        await insertDefaultPackages();
-        console.log('🔄 Creating default admin user...');
-        await createDefaultAdmin();
-        console.log('✅ Production database setup completed successfully!\n');
+    // Initialize database (optional for testing)
+    if (process.env.DB_HOST && process.env.DB_HOST !== 'your_mysql_host') {
+      console.log('\n🔄 Initializing production database...');
+      const dbConnected = await testConnection();
+      
+      if (dbConnected) {
+        const dbInitialized = await initializeDatabase();
+        if (dbInitialized) {
+          console.log('🔄 Inserting default packages...');
+          await insertDefaultPackages();
+          console.log('🔄 Creating default admin user...');
+          await createDefaultAdmin();
+          console.log('✅ Production database setup completed successfully!\n');
+        } else {
+          console.log('❌ Production database initialization failed!\n');
+          process.exit(1);
+        }
       } else {
-        console.log('❌ Production database initialization failed!\n');
+        console.log('❌ Production database connection failed! Please check your configuration.\n');
         process.exit(1);
       }
     } else {
-      console.log('❌ Production database connection failed! Please check your configuration.\n');
-      process.exit(1);
+      console.log('⚠️ Database connection skipped - using placeholder values\n');
     }
 
     // Check if SSL certificates exist
