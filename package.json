@@ -11,7 +11,8 @@
     "backend": "cd backend && npm start",
     "frontend": "cd frontend && npm start",
     "heroku-postbuild": "cd frontend && npm install && npm run build",
-    "render-build": "cd frontend && npm install && npm run build"
+    "render-build": "cd frontend && npm install && npm run build",
+    "render-start": "cd backend && npm run prod"
   },
   "engines": {
     "node": ">=16.0.0",
