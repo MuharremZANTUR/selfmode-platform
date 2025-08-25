@@ -2,13 +2,14 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { pool } = require('../config/database');
 const { createPaymentForm, verifyPayment, createRefund, getPaymentStatus } = require('../services/iyzico');
-const auth = require('../middleware/auth');
+const { authenticateToken } = require('../middleware/auth');
+const Iyzipay = require('iyzipay');
 
 const router = express.Router();
 
 // Create payment form
 router.post('/create', [
-  auth,
+  authenticateToken,
   body('packageId').notEmpty().withMessage('Package ID is required'),
   body('price').isNumeric().withMessage('Price must be a number'),
   body('paidPrice').isNumeric().withMessage('Paid price must be a number')
@@ -189,7 +190,7 @@ router.post('/callback', async (req, res) => {
 });
 
 // Get payment status
-router.get('/status/:paymentId', auth, async (req, res) => {
+router.get('/status/:paymentId', authenticateToken, async (req, res) => {
   try {
     const { paymentId } = req.params;
     const userId = req.user.userId;
@@ -230,7 +231,7 @@ router.get('/status/:paymentId', auth, async (req, res) => {
 
 // Create refund
 router.post('/refund/:paymentId', [
-  auth,
+  authenticateToken,
   body('amount').isNumeric().withMessage('Amount must be a number'),
   body('reason').optional().isString().withMessage('Reason must be a string')
 ], async (req, res) => {

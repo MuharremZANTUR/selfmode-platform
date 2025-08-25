@@ -1,6 +1,18 @@
 const Iyzipay = require('iyzipay');
 require('dotenv').config();
 
+// Check if iyzico environment variables are set
+if (!process.env.IYZICO_API_KEY || !process.env.IYZICO_SECRET_KEY || !process.env.IYZICO_BASE_URL) {
+    console.warn('⚠️ iyzico environment variables not set. Payment functionality will be disabled.');
+    module.exports = {
+        createPaymentForm: async () => ({ status: 'error', errorMessage: 'iyzico not configured' }),
+        verifyPayment: async () => ({ status: 'error', errorMessage: 'iyzico not configured' }),
+        createRefund: async () => ({ status: 'error', errorMessage: 'iyzico not configured' }),
+        getPaymentStatus: async () => ({ status: 'error', errorMessage: 'iyzico not configured' })
+    };
+    return;
+}
+
 // iyzico configuration
 const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY,
